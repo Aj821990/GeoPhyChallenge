@@ -14,16 +14,14 @@
     </listeners>
 -->
 
-    <test name="SmokeTest">
+    <test name="RegressionTest">
         <groups>
             <define name="regression">
                 <include name="regression"></include>
             </define>
         </groups>
         <classes>
-            <class name="Frontend.testCases.TC_Register_001"> </class>
-            <class name="Frontend.testCases.TC_Login_002"> </class>
-            <class name="Frontend.testCases.TC_Checkout_003"> </class>
+            <class name="Frontend.testCases.ScenarioLogin"> </class>
         </classes>
     </test>
 </suite>
