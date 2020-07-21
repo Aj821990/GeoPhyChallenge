@@ -14,14 +14,10 @@
     </listeners>
 -->
 
-    <test name="RegressionTest">
-        <groups>
-            <define name="regression">
-                <include name="regression"></include>
-            </define>
-        </groups>
+    <test name="Tests">
         <classes>
             <class name="Frontend.testCases.ScenarioLogin"> </class>
+            <class name="Frontend.testCases.ScenarioValuation"> </class>
         </classes>
     </test>
 </suite>

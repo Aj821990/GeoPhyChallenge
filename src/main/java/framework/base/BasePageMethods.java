@@ -83,8 +83,9 @@ public class BasePageMethods {
         scrollTo(element.getLocation().x, element.getLocation().y - margin);
     }
 
-    protected void scrollTo(int x, int y) {
+    protected By scrollTo(int x, int y) {
         jsExec.executeScript("scrollTo(" + x + "," + y + ");");
+        return null;
     }
 
     public boolean isElementPresent(By by, int timeOutInSeconds) {
@@ -236,7 +237,16 @@ public class BasePageMethods {
         return true;
     }
 
-    public void passArgument (By locator, String text) {
+    public void passArgument (By locator, String text)
+    {
         driver.findElement(locator).sendKeys(text);
     }
+
+    public void selectDropdownByValueAndIndex(By locator, String text, int index)
+    {
+        Select dropdown = new Select(driver.findElement(locator));
+        passArgument(locator,text);
+        dropdown.selectByIndex(index);
+    }
+
 }

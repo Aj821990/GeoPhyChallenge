@@ -2,12 +2,12 @@ package Frontend.testCases;
 
 import Frontend.pages.Login;
 import framework.Utilities.Constants;
-import framework.base.BasePageMethods;
+import framework.base.TestBase;
 import org.testng.annotations.Test;
 
-public class ScenarioLogin extends BasePageMethods {
+public class ScenarioLogin extends TestBase {
 
-    @Test(groups={"regression"},description = "LoginValidation")
+    @Test(description = "LoginValidation")
     public void loginValidation()
     {
         Login login = new Login();
