@@ -1,7 +1,15 @@
 package Frontend.pages;
 
+import framework.Utilities.Constants;
 import framework.base.BasePageMethods;
 import org.openqa.selenium.By;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * This is the class where all login page objects and login page related
+ * methods are defined. Any specific method which is only related to
+ * login page should be defined here.
+ */
 
 public class Login extends BasePageMethods {
 
@@ -48,4 +56,15 @@ public class Login extends BasePageMethods {
         }
         else log.info("Login Successful");
     }
+
+    public void loginTimeOut() throws InterruptedException {
+        loginValidation(Constants.USER, Constants.PASSWORD);
+        /* after login in we wait for certain amount of time
+           and refresh the page to confirm we are still logged
+           in or not
+         */
+        TimeUnit.MINUTES.wait(10);
+        driver.navigate().refresh();
+    }
+
 }

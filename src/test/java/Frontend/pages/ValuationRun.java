@@ -5,6 +5,13 @@ import framework.base.BasePageMethods;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+/**
+ * This is the class where all valuation page objects and valuation
+ * page related methods are defined. Any specific method which is
+ * only related to valuation page should be defined here.
+ */
+
+
 public class ValuationRun extends BasePageMethods {
 
     /******* Page objects *******/
@@ -32,6 +39,7 @@ public class ValuationRun extends BasePageMethods {
     /******* Page objects *******/
     public void valuationElements()
     {
+        waitUntilUrlContains("search");
         isElementPresent(addressText,1);
         isElementPresent(addressInput,1);
         isElementPresent(netOperatingIncomeText,1);
@@ -55,7 +63,7 @@ public class ValuationRun extends BasePageMethods {
     {
         valuationElements();
         textValidation(welcomeTitleUser,"QA Geophy");
-        selectDropdownByValueAndIndex(addressInput, Constants.ADDRESS, 1);
+        String selectedItem = selectDropdownByValueAndIndex(addressInput, Constants.ADDRESS, 1);
         this.value = Integer.toString(value);
         if(NOI==true)
         {
@@ -69,14 +77,6 @@ public class ValuationRun extends BasePageMethods {
         passArgument(yearOfConstructionInput, Constants.YearOfConstruction);
         passArgument(occupancyInput,Constants.OCCUPANCY);
         clickWebElement(runValuationButton);
-    }
-
-    public boolean textValidation(By locator, String value)
-    {
-        WebElement element = waitUntilVisibleByLocator(locator);
-        if(element.getText() == value)
-            return true;
-        else return false;
     }
 
     public void recentSearchValidation()

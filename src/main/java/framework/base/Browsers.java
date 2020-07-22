@@ -20,6 +20,13 @@ import java.util.Map;
 import static framework.base.TestBase.*;
 import static org.openqa.selenium.remote.CapabilityType.*;
 
+/**
+ * This call is used to configure driver and browsers.
+ *
+ * @return
+ */
+
+
 public class Browsers {
 
     public static WebDriver prepareDriver() {

@@ -4,6 +4,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * This class is for connecting to DB
+ */
+
 public class DBConnection {
 
     public static Statement getConnection() {

@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 public class ScenarioValuation extends TestBase {
 
-    @Test(description = "Valuation scenarios")
+    @Test(description = "Valuation scenario with noi")
     public void valuationWithNOI()
     {
         Login login = new Login();
@@ -18,6 +18,7 @@ public class ScenarioValuation extends TestBase {
         valuation.valuationValidation(true, 2000000);
     }
 
+    @Test(description = "valuation scenario without noi")
     public void valuationWithOutNOI()
     {
         Login login = new Login();

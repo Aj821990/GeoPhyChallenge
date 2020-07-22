@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * This is the config class which configures the base instances for the process
+ */
+
 public class Config {
 
     private static String host,baseUrl;

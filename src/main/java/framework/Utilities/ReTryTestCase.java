@@ -6,6 +6,10 @@ import org.testng.ITestResult;
 import static framework.base.TestBase.RETRY;
 import static framework.extentFactory.ReportFactory.setSuccessToChild;
 
+/**
+ * This class defines the number of retries which can be executed if the script fails
+ */
+
 public class ReTryTestCase implements IRetryAnalyzer {
 
     private int count = 0;

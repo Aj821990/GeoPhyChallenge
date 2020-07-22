@@ -7,7 +7,11 @@ import java.sql.Statement;
 import static framework.Utilities.DBConnection.getConnection;
 
 public class Queries {
-
+    /**
+     * This function is to create and work on queries.
+     * Below given is just an example of select statement
+     * @return
+     */
     public static String getInfoFromDB(){
         ResultSet rs;
         Statement statement = getConnection();

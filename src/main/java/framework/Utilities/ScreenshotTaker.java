@@ -19,6 +19,11 @@ import java.util.Date;
 
 import static framework.Utilities.DriverManager.getDriver;
 
+/**
+ * This class defines the method to take and add screenshots
+ *
+ */
+
 public class ScreenshotTaker {
 
     public static void takeScreenShot(String name) throws IOException {

@@ -16,15 +16,20 @@ import static org.aspectj.bridge.MessageUtil.info;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 import static org.testng.FileAssert.fail;
 
+/**
+ * This is base page which covers all the common methods that are declared once
+ * and used in all the other classes
+ */
+
 public class BasePageMethods {
 
     protected WebDriver driver = getDriver();
     private WebDriverWait webDriverWait = new WebDriverWait(driver, 60);
     private JavascriptExecutor jsExec = (JavascriptExecutor) driver;
-    //XLUtils xlread = new XLUtils();
+    //XLUtils xlread = new XLUtils(); // can be used when we get data from testdata file
     public Logger log = Logger.getLogger("rootLogger");
 
-    // Element click method
+    // Element click method by By locator
     public void clickWebElement(By locator) {
         WebElement element = waitUntilVisibleByLocator(locator);
         scrollTo(element,100);
@@ -47,7 +52,7 @@ public class BasePageMethods {
         return element;
     }
 
-    //wait element until presence
+    //waits till the element is present and fails if element not present
     protected WebElement waitUntilPresenceOfElementByLocator(By locator) {
         WebElement element = null;
 
@@ -64,6 +69,7 @@ public class BasePageMethods {
         return element;
     }
 
+/*
     //wait for search results
     protected void waitForSearchResults(By locator) {
         try {
@@ -78,16 +84,20 @@ public class BasePageMethods {
             Assert.fail("Something went wrong");
         }
     }
+*/
 
+    // scroll to particular element
     protected void scrollTo(WebElement element, int margin) {
         scrollTo(element.getLocation().x, element.getLocation().y - margin);
     }
 
+    // scroll to particular element based on co-ordinates
     protected By scrollTo(int x, int y) {
         jsExec.executeScript("scrollTo(" + x + "," + y + ");");
         return null;
     }
 
+    // check if element is present without giving any error
     public boolean isElementPresent(By by, int timeOutInSeconds) {
         Wait<WebDriver> wait = new FluentWait<>(driver)
                 .withTimeout(Duration.ofSeconds(timeOutInSeconds))
@@ -102,6 +112,7 @@ public class BasePageMethods {
         }
     }
 
+    // checks for visibility of elements
     protected List<WebElement> visibilityOfAllWait(By by, int timeOutInSeconds) {
         Wait<WebDriver> wait = new FluentWait<>(driver)
                 .withTimeout(Duration.ofSeconds(timeOutInSeconds))
@@ -112,6 +123,9 @@ public class BasePageMethods {
         return wait.until(visibilityOfAllElementsLocatedBy(by));
     }
 
+/*
+
+    // checks for visibility of multiple elements
     protected List<WebElement> visibilitiesWaitNested(WebElement element, By by, int timeoutInSeconds) {
         Wait<WebDriver> wait = new FluentWait<>(driver)
                 .withTimeout(Duration.ofSeconds(timeoutInSeconds))
@@ -120,6 +134,8 @@ public class BasePageMethods {
                 .ignoring(NoSuchElementException.class);
         return wait.until(visibilityOfAllElementsLocatedByIn(by, element));
     }
+*/
+
 
     protected static ExpectedCondition<List<WebElement>> visibilityOfAllElementsLocatedByIn
             (final By locator, final WebElement parent) {
@@ -146,17 +162,22 @@ public class BasePageMethods {
             }
         };
     }
+/*
 
+    // wait for element till it gets the attribute value
     protected void waitForElementToGetAttribute(int seconds, By elementLocator, String attribute, String value) {
         WebDriverWait wait = new WebDriverWait(driver, seconds);
         wait.until(attributeContains(elementLocator, attribute, value));
     }
+*/
 
+    // press enter by sendkeys
     protected void pressEnter() {
         Actions builder = new Actions(driver);
         builder.sendKeys(Keys.ENTER).build().perform();
     }
 
+    // mouse hover to identify elements
     public WebElement mouseHover(By locator) {
         WebElement element = null;
         try {
@@ -166,10 +187,10 @@ public class BasePageMethods {
         } catch (Throwable t) {
             Assert.fail("Couldn't find element", t);
         }
-
         return element;
     }
 
+    // waits for elements untill it is visible and clickable
     public WebElement waitUntilClickableByLocator(By locator) {
         WebElement element = null;
         try {
@@ -186,6 +207,8 @@ public class BasePageMethods {
         return element;
     }
 
+/*
+    // wait for visibility of element and throws error if element no visible
     public WebElement waitUntilVisibleByLocatorSafely(By locator, int time) {
         WebElement element = null;
         try {
@@ -198,9 +221,9 @@ public class BasePageMethods {
         } catch (Exception e) {
             Assert.fail("Element is not visible", e);
         }
-
         return element;
     }
+*/
 
     protected WebElement waitUntilClickableByListOfElement(WebElement webElement) {
         WebElement element = null;
@@ -237,16 +260,33 @@ public class BasePageMethods {
         return true;
     }
 
+    // sendkeys to provide input to text fields
     public void passArgument (By locator, String text)
     {
         driver.findElement(locator).sendKeys(text);
     }
 
-    public void selectDropdownByValueAndIndex(By locator, String text, int index)
+    // dropdown selection after passing value and saving the selected value
+    public String selectDropdownByValueAndIndex(By locator, String text, int index)
     {
         Select dropdown = new Select(driver.findElement(locator));
         passArgument(locator,text);
+        WebElement option = dropdown.getFirstSelectedOption();
         dropdown.selectByIndex(index);
+        String selectedItem = option.getText();
+
+        return selectedItem;
     }
 
+    // compares the value from element to the expected value
+    public void textValidation(By locator, String value) {
+        WebElement element = waitUntilVisibleByLocator(locator);
+        try {
+            if (element.getText() == value)
+                log.info(element.getText() + " is equal to " + value);
+        } catch (Exception e) {
+            fail("Texts are not equal.");
+            Assert.fail("Texts are not equal.", e);
+        }
+    }
 }

@@ -23,6 +23,11 @@ import java.util.Properties;
 import static framework.base.Browsers.prepareDriver;
 import static framework.extentFactory.ReportFactory.createReportFile;
 
+/**
+ * This is test base where testNG annotation sequence are defined and
+ * which controls the flow of scripts
+ */
+
 @Listeners({Listener.class})
 public class TestBase {
 

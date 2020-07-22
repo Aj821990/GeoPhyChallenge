@@ -13,6 +13,11 @@ import java.io.IOException;
 
 import static framework.extentFactory.ReportFactory.getChildTest;
 
+/**
+ * This is the Listener class which verifies the success or failure of tests
+ *
+ */
+
 public class Listener extends TestBase implements ITestListener {
 
     public static String testMethodNameOnTestStart;

@@ -12,6 +12,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class creates and maintains the reporting part
+ */
+
 public class ReportFactory {
 
     private static ExtentReports extentReports = null;
