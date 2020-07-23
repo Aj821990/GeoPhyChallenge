@@ -9,10 +9,8 @@ import org.testng.Assert;
 import java.time.Duration;
 import java.util.List;
 
-import static framework.Utilities.Constants.WAIT_MEDIUM;
 import static framework.base.TestBase.getDriver;
 import static java.util.Collections.emptyList;
-import static org.aspectj.bridge.MessageUtil.info;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 import static org.testng.FileAssert.fail;
 
@@ -250,7 +248,7 @@ public class BasePageMethods {
                     .ignoring(NoSuchElementException.class);
             boolean urlExists = wait.until(ExpectedConditions.urlContains(expectedValue));
             if (urlExists) {
-                info("Waited until for URL and contains expected value: " + expectedValue);
+                log.info("Waited until for URL and contains expected value: " + expectedValue);
             }
         } catch (Exception e) {
             fail("Waited until for URL and NOT contains expected value.");
@@ -263,18 +261,35 @@ public class BasePageMethods {
     // sendkeys to provide input to text fields
     public void passArgument (By locator, String text)
     {
-        driver.findElement(locator).sendKeys(text);
+        WebElement element = driver.findElement(locator);
+        element.clear();
+        element.sendKeys(text);
     }
 
     // dropdown selection after passing value and saving the selected value
-    public String selectDropdownByValueAndIndex(By locator, String text, int index)
+    public String selectDropdownByValueAndIndex(By locator, String inputText, String valueToBeSelected)
     {
-        Select dropdown = new Select(driver.findElement(locator));
-        passArgument(locator,text);
-        WebElement option = dropdown.getFirstSelectedOption();
-        dropdown.selectByIndex(index);
-        String selectedItem = option.getText();
+        //driver.findElement(locator).click();
+        //passArgument(locator,inputText);
 
+
+        List<WebElement> dpListValues=driver.findElements(locator);
+        passArgument(locator,inputText);
+
+
+        for (int i=0; i<dpListValues.size();i++)
+        {
+            if ((dpListValues.get(i).getText()).contains(valueToBeSelected))
+            {
+                dpListValues.get(i).click();
+                break;
+            }
+        }
+
+
+        //WebElement option = dropdown.getFirstSelectedOption();
+        //dropdown.selectByIndex(index);
+        String selectedItem = dpListValues.get(1).getText();
         return selectedItem;
     }
 

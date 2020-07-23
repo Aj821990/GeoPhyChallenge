@@ -63,7 +63,8 @@ public class ValuationRun extends BasePageMethods {
     {
         valuationElements();
         textValidation(welcomeTitleUser,"QA Geophy");
-        String selectedItem = selectDropdownByValueAndIndex(addressInput, Constants.ADDRESS, 1);
+        String dropdownSelected = "555 N College Ave, Tempe, AZ 85281, USA";
+        String selectedItem = selectDropdownByValueAndIndex(addressInput, Constants.ADDRESS, dropdownSelected);
         this.value = Integer.toString(value);
         if(NOI==true)
         {

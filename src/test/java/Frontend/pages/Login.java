@@ -54,7 +54,9 @@ public class Login extends BasePageMethods {
         {
             log.info("Credentials are incorrect");
         }
-        else log.info("Login Successful");
+        else {
+            log.info("Login Successful");
+        }
     }
 
     public void loginTimeOut() throws InterruptedException {

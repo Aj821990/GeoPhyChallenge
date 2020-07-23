@@ -107,9 +107,7 @@ public class Browsers {
     private static void loadBrowsers() {
         String os = System.getProperty("os.name").toLowerCase();
         if(os.contains("win")) {
-            System.setProperty("webdriver.ie.driver", System.getProperty("user.dir" + "src/main/java/resources/IEDriverServer.exe"));
-            System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir" + "src/main/java/resources/chromedriver.exe"));
-            System.setProperty("webdriver.firefox.driver", System.getProperty("user.dir" + "src/main/java/resources/geckodriver.exe"));
+            System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "/src/main/java/resources/chromedriver.exe");
         }
     }
 }

@@ -32,7 +32,7 @@ public class Config {
     }
 
     private void loadConfigFileFromResource() throws IOException {
-        final InputStream in = this.getClass().getResourceAsStream("/config.properties");
+        final InputStream in = this.getClass().getResourceAsStream("/resources/config.properties");
 
         configuration = new Properties();
 
@@ -55,7 +55,7 @@ public class Config {
     }
 
     public String getBaseUrl(){
-        System.out.println("Returning base url from config.java class");
+        System.out.println("Returning base url * " + baseUrl + " * from config.java class");
         return baseUrl;
     }
 }
