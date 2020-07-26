@@ -4,6 +4,7 @@ import framework.Utilities.Constants;
 import framework.base.BasePageMethods;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +35,12 @@ public class ValuationReport extends BasePageMethods {
     By NOIPerUnitText = By.xpath("//td[text()='NOI per unit']");
     By occupancyText = By.xpath("//td[contains(text(),'Occupancy')]");
 
-    /******* Page objects *******/
+    /******* Page methods *******/
+    /**
+     * valuationReportElements() takes condition for NOI as input
+     * and verifies whether all elements are present on the page
+     * and gives hard assert fail if elements are not present
+     */
     public void valuationReportElements(Boolean NOI)
     {
         waitUntilPresenceOfElementByLocator(valuationPriceAmount);
@@ -62,6 +68,12 @@ public class ValuationReport extends BasePageMethods {
         }
     }
 
+    /**
+     * valuationValuesValidation() takes condition for NOI as input and
+     * verifies whether the results displayed are as per the inputs
+     * previously given
+     * @param NOI
+     */
     public void valuationValuesValidation(Boolean NOI)
     {
         valuationReportElements(NOI);
@@ -86,6 +98,13 @@ public class ValuationReport extends BasePageMethods {
         verifyValueInMap(tableValues,Constants.NetOperatingIncome);
     }
 
+    /**
+     * verifyValueInMap() takes the map object and the value which needs to be confirmed.
+     * verifyValueInMap() confirms whether the required value is present in the map or not
+     * @param map1
+     * @param value
+     * @return
+     */
     public boolean verifyValueInMap(Map<Object, Object> map1, String value)
     {
         if (map1 == null)
@@ -93,11 +112,17 @@ public class ValuationReport extends BasePageMethods {
             log.info(map1 + " Map is empty!");
             return false;
         }
-        else
+        if (map1 != null)
         {
             map1.containsValue(value);
             log.info(value + " is present on report screen.");
+            return true;
         }
-        return true;
+        else
+        {
+            log.info(value + " is not present on report screen");
+            Assert.fail(value + " is not present on report screen");
+            return false;
+        }
     }
 }

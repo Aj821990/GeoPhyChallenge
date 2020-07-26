@@ -16,7 +16,7 @@ public class ScenarioValuationReport extends TestBase {
         ValuationReport valuationReport = new ValuationReport();
 
         login.loginValidation(Constants.USER, Constants.PASSWORD);
-        valuation.valuationValidation(true, Constants.NetOperatingIncome);
+        valuation.valuationInputs(true, Constants.NetOperatingIncome);
         valuationReport.valuationValuesValidation(true);
     }
 
@@ -27,7 +27,7 @@ public class ScenarioValuationReport extends TestBase {
         ValuationReport valuationReport = new ValuationReport();
 
         login.loginValidation(Constants.USER, Constants.PASSWORD);
-        valuation.valuationValidation(false, Constants.NetOperatingIncome);
+        valuation.valuationInputs(false, Constants.NetOperatingIncome);
         valuationReport.valuationValuesValidation(false);
     }
 

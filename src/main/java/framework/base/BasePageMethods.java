@@ -213,13 +213,20 @@ public class BasePageMethods {
 
     // compares the value from element to the expected value
     public void textValidation(By locator, String value) {
-        WebElement element = waitUntilVisibleByLocator(locator);
+        WebElement element = driver.findElement(locator);
         try {
-            if (element.getText() == value)
-                log.info(element.getText() + " is equal to " + value);
+            Wait<WebDriver> wait = new FluentWait<>(driver)
+                    .withTimeout(Duration.ofSeconds(30))
+                    .withTimeout(Duration.ofMillis(100))
+                    .ignoring(StaleElementReferenceException.class)
+                    .ignoring(NoSuchElementException.class);
+            boolean matchText = wait.until(ExpectedConditions.textToBePresentInElementLocated(locator,value));
+            if (matchText) {
+                log.info("Texts are matching.");
+            }
         } catch (Exception e) {
-            fail("Texts are not equal.");
-            Assert.fail("Texts are not equal.", e);
+            fail("Mismatch in texts");
+            Assert.fail("Mismatch in texts", e);
         }
     }
 }

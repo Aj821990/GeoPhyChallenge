@@ -26,17 +26,27 @@ public class Login extends BasePageMethods {
     By errorForInvalidID = By.xpath("//*[@class='alert alert--danger']");
     By errorForInvalidPassword = By.xpath("//*[@class='alert alert--warning']");
 
-    /******* Page objects *******/
+    /******* Page methods *******/
+    /**
+     * loginElements() verifies whether all elements are present on the page
+     * and gives hard assert fail if elements are not present
+     */
     public void loginElements(){
-        waitUntilClickableByLocator(loginText);
-        isElementPresent(loginText,1);
-        waitUntilClickableByLocator(loginEmailID);
-        waitUntilClickableByLocator(loginPassword);
-        isElementPresent(loginPasswordShowIcon,1);
-        isElementPresent(loginRememberMeCheckBox,1);
-        waitUntilClickableByLocator(loginSubmitButton);
+        waitUntilPresenceOfElementByLocator(loginText);
+        waitUntilPresenceOfElementByLocator(loginText);
+        waitUntilPresenceOfElementByLocator(loginEmailID);
+        waitUntilPresenceOfElementByLocator(loginPassword);
+        waitUntilPresenceOfElementByLocator(loginPasswordShowIcon);
+        waitUntilPresenceOfElementByLocator(loginRememberMeCheckBox);
+        waitUntilPresenceOfElementByLocator(loginSubmitButton);
     }
 
+    /**
+     * loginValidation() takes username and password as inputs
+     * and validates whether the username and password combinations are correct
+     * @param userName
+     * @param password
+     */
     public void loginValidation(String userName, String password){
         loginElements();
         passArgument(loginEmailID, userName);
@@ -64,6 +74,11 @@ public class Login extends BasePageMethods {
         }
     }
 
+    /**
+     * loginTimeOut() checks for the timeout or session expiry
+     * for a particular session
+     * @throws InterruptedException
+     */
     public void loginTimeOut() throws InterruptedException {
         loginValidation(Constants.USER, Constants.PASSWORD);
         /* after login in we wait for certain amount of time

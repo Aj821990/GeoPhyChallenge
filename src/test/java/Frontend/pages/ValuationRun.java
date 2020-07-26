@@ -37,30 +37,40 @@ public class ValuationRun extends BasePageMethods {
     By viewSampleReportLink = By.xpath("//*[@id='introjsSampleReport']blablabla");
     private String value;
 
-    /******* Page objects *******/
+    /******* Page methods *******/
+    /**
+     * valuationElements() verifies whether all elements are present on the page
+     * and gives hard assert fail if elements are not present
+     */
     public void valuationElements()
     {
         waitUntilUrlContains("search");
-        isElementPresent(addressText,1);
-        isElementPresent(addressInput,1);
-        isElementPresent(netOperatingIncomeText,1);
-        isElementPresent(netOperatingIncomeDollarSign,1);
-        isElementPresent(netOperatingIncomeInput,1);
-        isElementPresent(numberOfUnitsText,1);
-        isElementPresent(numberOfUnitsInput,1);
-        isElementPresent(unitSizeText,1);
-        isElementPresent(unitSizeInput,1);
-        isElementPresent(yearOfConstructionText,1);
-        isElementPresent(yearOfConstructionInput,1);
-        isElementPresent(occupanceText,1);
-        isElementPresent(occupancyInput,1);
-        isElementPresent(welcomeTitle,1);
-        isElementPresent(welcomeTitleUser,1);
-        isElementPresent(valuationExplanation,1);
-        //recentSearchValidation();
+        waitUntilPresenceOfElementByLocator(addressText);
+        waitUntilPresenceOfElementByLocator(addressInput);
+        waitUntilPresenceOfElementByLocator(netOperatingIncomeText);
+        waitUntilPresenceOfElementByLocator(netOperatingIncomeDollarSign);
+        waitUntilPresenceOfElementByLocator(netOperatingIncomeInput);
+        waitUntilPresenceOfElementByLocator(numberOfUnitsText);
+        waitUntilPresenceOfElementByLocator(numberOfUnitsInput);
+        waitUntilPresenceOfElementByLocator(unitSizeText);
+        waitUntilPresenceOfElementByLocator(unitSizeInput);
+        waitUntilPresenceOfElementByLocator(yearOfConstructionText);
+        waitUntilPresenceOfElementByLocator(yearOfConstructionInput);
+        waitUntilPresenceOfElementByLocator(occupanceText);
+        waitUntilPresenceOfElementByLocator(occupancyInput);
+        waitUntilPresenceOfElementByLocator(welcomeTitle);
+        waitUntilPresenceOfElementByLocator(welcomeTitleUser);
+        waitUntilPresenceOfElementByLocator(valuationExplanation);
     }
 
-    public void valuationValidation(boolean NOI, String value) throws InterruptedException {
+    /**
+     * valuationInputs() takes below inputs and executes based on whether NOI
+     * is considered or not.
+     * @param NOI
+     * @param value
+     * @throws InterruptedException
+     */
+    public void valuationInputs(boolean NOI, String value) throws InterruptedException {
         valuationElements();
         textValidation(welcomeTitleUser,"QA Geophy");
         WebElement address = driver.findElement(addressInput);
@@ -83,6 +93,9 @@ public class ValuationRun extends BasePageMethods {
         clickWebElement(runValuationButton);
     }
 
+    /**
+     * recentSearchValidation() looks and verifies the recent searches done by the current user
+     */
     public void recentSearchValidation()
     {
         /* this can be carried out if we have proper

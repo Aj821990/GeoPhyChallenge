@@ -14,7 +14,7 @@ public class ScenarioValuation extends TestBase {
         ValuationRun valuation = new ValuationRun();
 
         login.loginValidation(Constants.USER, Constants.PASSWORD);
-        valuation.valuationValidation(true, Constants.NetOperatingIncome);
+        valuation.valuationInputs(true, Constants.NetOperatingIncome);
     }
 
     @Test(description = "valuation scenario without noi")
@@ -23,6 +23,6 @@ public class ScenarioValuation extends TestBase {
         ValuationRun valuation = new ValuationRun();
 
         login.loginValidation(Constants.USER, Constants.PASSWORD);
-        valuation.valuationValidation(false, Constants.NetOperatingIncome);
+        valuation.valuationInputs(false, Constants.NetOperatingIncome);
     }
 }
