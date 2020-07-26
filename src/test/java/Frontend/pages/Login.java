@@ -23,7 +23,8 @@ public class Login extends BasePageMethods {
     By errorForEmptyCredentials = By.xpath("//*[@class='alert alert--error']");
     By errorForEmptyLoginEmailID = By.xpath("//li[contains(text(), 'email')]");
     By errorForEmptyLoginPassword = By.xpath("//li[contains(text(), 'password')]");
-    By errorForInvalidCredentials = By.xpath("//*[@class='alert alert--danger']");
+    By errorForInvalidID = By.xpath("//*[@class='alert alert--danger']");
+    By errorForInvalidPassword = By.xpath("//*[@class='alert alert--warning']");
 
     /******* Page objects *******/
     public void loginElements(){
@@ -50,9 +51,13 @@ public class Login extends BasePageMethods {
             }
             else log.info("Password field is empty");
         }
-        if (isElementPresent(errorForInvalidCredentials,1))
+        else if (isElementPresent(errorForInvalidID,1))
         {
-            log.info("Credentials are incorrect");
+            log.info("Email id is incorrect");
+        }
+        else if (isElementPresent(errorForInvalidPassword,1))
+        {
+            log.info("Password is incorrect");
         }
         else {
             log.info("Login Successful");

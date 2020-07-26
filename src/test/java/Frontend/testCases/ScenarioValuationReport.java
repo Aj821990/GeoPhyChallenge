@@ -9,15 +9,26 @@ import org.testng.annotations.Test;
 
 public class ScenarioValuationReport extends TestBase {
 
-    @Test(description = "Valuation report scenarios")
-    public void valuationReport()
-    {
+    @Test(description = "Valuation report scenarios with NOI")
+    public void valuationReportWithNOI() throws InterruptedException {
         Login login = new Login();
         ValuationRun valuation = new ValuationRun();
         ValuationReport valuationReport = new ValuationReport();
 
         login.loginValidation(Constants.USER, Constants.PASSWORD);
-        valuation.valuationValidation(true, 2000000);
-        valuationReport.valuationValuesValidation();
+        valuation.valuationValidation(true, Constants.NetOperatingIncome);
+        valuationReport.valuationValuesValidation(true);
     }
+
+    @Test(description = "Valuation report scenarios without NOI")
+    public void valuationReportWithoutNOI() throws InterruptedException {
+        Login login = new Login();
+        ValuationRun valuation = new ValuationRun();
+        ValuationReport valuationReport = new ValuationReport();
+
+        login.loginValidation(Constants.USER, Constants.PASSWORD);
+        valuation.valuationValidation(false, Constants.NetOperatingIncome);
+        valuationReport.valuationValuesValidation(false);
+    }
+
 }

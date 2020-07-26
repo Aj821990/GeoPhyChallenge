@@ -62,27 +62,11 @@ public class BasePageMethods {
                     .ignoring(NoSuchElementException.class);
             element = wait.until(presenceOfElementLocated(locator));
         } catch (Throwable t) {
-            Assert.fail("waitUntilPresenceOfElementByLocator fail", t);
+            Assert.fail("waitUntilPresenceOfElementByLocator" +locator +"fail", t);
         }
         return element;
     }
 
-/*
-    //wait for search results
-    protected void waitForSearchResults(By locator) {
-        try {
-            new WebDriverWait(driver, 30)
-                    .until(ExpectedConditions
-                    .numberOfElementsToBeMoreThan(locator, 0));
-        } catch (TimeoutException e) {
-            e.printStackTrace();
-            Assert.fail("Timeout: The element couldn't be found in " + WAIT_MEDIUM + " seconds!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Assert.fail("Something went wrong");
-        }
-    }
-*/
 
     // scroll to particular element
     protected void scrollTo(WebElement element, int margin) {
@@ -121,20 +105,7 @@ public class BasePageMethods {
         return wait.until(visibilityOfAllElementsLocatedBy(by));
     }
 
-/*
-
-    // checks for visibility of multiple elements
-    protected List<WebElement> visibilitiesWaitNested(WebElement element, By by, int timeoutInSeconds) {
-        Wait<WebDriver> wait = new FluentWait<>(driver)
-                .withTimeout(Duration.ofSeconds(timeoutInSeconds))
-                .pollingEvery(Duration.ofMillis(500))
-                .ignoring(NotFoundException.class)
-                .ignoring(NoSuchElementException.class);
-        return wait.until(visibilityOfAllElementsLocatedByIn(by, element));
-    }
-*/
-
-
+    //
     protected static ExpectedCondition<List<WebElement>> visibilityOfAllElementsLocatedByIn
             (final By locator, final WebElement parent) {
         return new ExpectedCondition<List<WebElement>>() {
@@ -160,14 +131,6 @@ public class BasePageMethods {
             }
         };
     }
-/*
-
-    // wait for element till it gets the attribute value
-    protected void waitForElementToGetAttribute(int seconds, By elementLocator, String attribute, String value) {
-        WebDriverWait wait = new WebDriverWait(driver, seconds);
-        wait.until(attributeContains(elementLocator, attribute, value));
-    }
-*/
 
     // press enter by sendkeys
     protected void pressEnter() {
@@ -204,24 +167,6 @@ public class BasePageMethods {
 
         return element;
     }
-
-/*
-    // wait for visibility of element and throws error if element no visible
-    public WebElement waitUntilVisibleByLocatorSafely(By locator, int time) {
-        WebElement element = null;
-        try {
-            Wait<WebDriver> wait = new FluentWait<>(driver)
-                    .withTimeout(Duration.ofSeconds(time))
-                    .pollingEvery(Duration.ofMillis(100))
-                    .ignoring(StaleElementReferenceException.class)
-                    .ignoring(NoSuchElementException.class);
-            element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-        } catch (Exception e) {
-            Assert.fail("Element is not visible", e);
-        }
-        return element;
-    }
-*/
 
     protected WebElement waitUntilClickableByListOfElement(WebElement webElement) {
         WebElement element = null;
@@ -264,33 +209,6 @@ public class BasePageMethods {
         WebElement element = driver.findElement(locator);
         element.clear();
         element.sendKeys(text);
-    }
-
-    // dropdown selection after passing value and saving the selected value
-    public String selectDropdownByValueAndIndex(By locator, String inputText, String valueToBeSelected)
-    {
-        //driver.findElement(locator).click();
-        //passArgument(locator,inputText);
-
-
-        List<WebElement> dpListValues=driver.findElements(locator);
-        passArgument(locator,inputText);
-
-
-        for (int i=0; i<dpListValues.size();i++)
-        {
-            if ((dpListValues.get(i).getText()).contains(valueToBeSelected))
-            {
-                dpListValues.get(i).click();
-                break;
-            }
-        }
-
-
-        //WebElement option = dropdown.getFirstSelectedOption();
-        //dropdown.selectByIndex(index);
-        String selectedItem = dpListValues.get(1).getText();
-        return selectedItem;
     }
 
     // compares the value from element to the expected value

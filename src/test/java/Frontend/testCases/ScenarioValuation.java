@@ -9,22 +9,20 @@ import org.testng.annotations.Test;
 public class ScenarioValuation extends TestBase {
 
     @Test(description = "Valuation scenario with noi")
-    public void valuationWithNOI()
-    {
+    public void valuationWithNOI() throws InterruptedException {
         Login login = new Login();
         ValuationRun valuation = new ValuationRun();
 
         login.loginValidation(Constants.USER, Constants.PASSWORD);
-        valuation.valuationValidation(true, 2000000);
+        valuation.valuationValidation(true, Constants.NetOperatingIncome);
     }
 
     @Test(description = "valuation scenario without noi")
-    public void valuationWithOutNOI()
-    {
+    public void valuationWithOutNOI() throws InterruptedException {
         Login login = new Login();
         ValuationRun valuation = new ValuationRun();
 
         login.loginValidation(Constants.USER, Constants.PASSWORD);
-        valuation.valuationValidation(false, 2000000);
+        valuation.valuationValidation(false, Constants.NetOperatingIncome);
     }
 }

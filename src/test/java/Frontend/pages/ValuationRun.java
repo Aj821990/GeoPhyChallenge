@@ -3,6 +3,7 @@ package Frontend.pages;
 import framework.Utilities.Constants;
 import framework.base.BasePageMethods;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -33,7 +34,7 @@ public class ValuationRun extends BasePageMethods {
     By occupanceText = By.xpath("//*[@for='occupancy']");
     By occupancyInput = By.xpath("//*[@name='occupancy']");
     By runValuationButton = By.xpath("//*[@id='introjsRunValuationButton']");
-    By viewSampleReportLink = By.xpath("//*[@id='introjsSampleReport']");
+    By viewSampleReportLink = By.xpath("//*[@id='introjsSampleReport']blablabla");
     private String value;
 
     /******* Page objects *******/
@@ -59,20 +60,22 @@ public class ValuationRun extends BasePageMethods {
         //recentSearchValidation();
     }
 
-    public void valuationValidation(boolean NOI, int value)
-    {
+    public void valuationValidation(boolean NOI, String value) throws InterruptedException {
         valuationElements();
         textValidation(welcomeTitleUser,"QA Geophy");
-        String dropdownSelected = "555 N College Ave, Tempe, AZ 85281, USA";
-        String selectedItem = selectDropdownByValueAndIndex(addressInput, Constants.ADDRESS, dropdownSelected);
-        this.value = Integer.toString(value);
+        WebElement address = driver.findElement(addressInput);
+        address.sendKeys(Constants.ADDRESS);
+        waitUntilVisibleByLocator(addressInput);
+        clickWebElement(addressInput);
+        address.sendKeys(Keys.DOWN);
+
         if(NOI==true)
         {
-            passArgument(netOperatingIncomeInput, this.value);
+            passArgument(netOperatingIncomeInput, value);
         }
         else
         {
-            passArgument(unitSizeInput, this.value);
+            passArgument(unitSizeInput, value);
         }
         passArgument(numberOfUnitsInput, Constants.NumberOfUnits);
         passArgument(yearOfConstructionInput, Constants.YearOfConstruction);
