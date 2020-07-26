@@ -8,16 +8,10 @@
     <parameter name="env" value=""/>
     <parameter name="____" value="____"/>
 
-<!--
-    <listeners>
-        <listener class-name="framework.listener.Listener" />
-    </listeners>
--->
-
     <test name="Tests">
         <classes>
-            <!--<class name="Frontend.testCases.ScenarioLogin"> </class>-->
-            <!--<class name="Frontend.testCases.ScenarioValuation"> </class>-->
+            <class name="Frontend.testCases.ScenarioLogin"> </class>
+            <class name="Frontend.testCases.ScenarioValuation"> </class>
             <class name="Frontend.testCases.ScenarioValuationReport"> </class>
         </classes>
     </test>

@@ -2,7 +2,6 @@ package framework.base;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.*;
 import org.testng.Assert;
 
@@ -94,17 +93,6 @@ public class BasePageMethods {
         }
     }
 
-    // checks for visibility of elements
-    protected List<WebElement> visibilityOfAllWait(By by, int timeOutInSeconds) {
-        Wait<WebDriver> wait = new FluentWait<>(driver)
-                .withTimeout(Duration.ofSeconds(timeOutInSeconds))
-                .pollingEvery(Duration.ofMillis(500))
-                .ignoring(NotFoundException.class)
-                .ignoring(NoSuchElementException.class);
-
-        return wait.until(visibilityOfAllElementsLocatedBy(by));
-    }
-
     //
     protected static ExpectedCondition<List<WebElement>> visibilityOfAllElementsLocatedByIn
             (final By locator, final WebElement parent) {
@@ -130,42 +118,6 @@ public class BasePageMethods {
                 return "visibility of all elements located by " + locator;
             }
         };
-    }
-
-    // press enter by sendkeys
-    protected void pressEnter() {
-        Actions builder = new Actions(driver);
-        builder.sendKeys(Keys.ENTER).build().perform();
-    }
-
-    // mouse hover to identify elements
-    public WebElement mouseHover(By locator) {
-        WebElement element = null;
-        try {
-            element = driver.findElement(locator);
-            Actions builder = new Actions(driver);
-            builder.moveToElement(element).build().perform();
-        } catch (Throwable t) {
-            Assert.fail("Couldn't find element", t);
-        }
-        return element;
-    }
-
-    // waits for elements untill it is visible and clickable
-    public WebElement waitUntilClickableByLocator(By locator) {
-        WebElement element = null;
-        try {
-            Wait<WebDriver> wait = new FluentWait<>(getDriver())
-                    .withTimeout(Duration.ofSeconds(30))
-                    .pollingEvery(Duration.ofMillis(100))
-                    .ignoring(StaleElementReferenceException.class)
-                    .ignoring(NoSuchElementException.class);
-            element = wait.until(ExpectedConditions.elementToBeClickable(locator));
-        } catch (Exception e) {
-            Assert.fail("Element is not clickable", e);
-        }
-
-        return element;
     }
 
     protected WebElement waitUntilClickableByListOfElement(WebElement webElement) {

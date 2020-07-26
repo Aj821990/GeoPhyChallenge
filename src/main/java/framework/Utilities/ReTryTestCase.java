@@ -16,7 +16,7 @@ public class ReTryTestCase implements IRetryAnalyzer {
 
     public static int globalcounter = 0;
 
-    private static int maxTry = RETRY;
+    private static int maxTry = RETRY; // retry is passed when running by terminal e.g: -DreTry=2
 
     public synchronized boolean retry(ITestResult result) {
         if ((!result.isSuccess()) && (count < maxTry)) {

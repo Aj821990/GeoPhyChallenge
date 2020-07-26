@@ -5,7 +5,6 @@ services:
 
 stages:
   - build
-  - test
 
 before_script:
   - export DISPLAY=:1
@@ -17,6 +16,11 @@ maven-build:
   tags:
     - m5.large
   script:
+    #- When automating your script based on developer's branch
+    #- You can execute your script on ci pipeline based on developer's feature branch by below command
+    #- mvn clean -DbranchNameURL=${branchName} -Dtest=ScenarioValuationReport test -DreTry=2 -Dbrowser -Denv -DgridUrl=http://selenium__standalone-chrome:4444/wd/hub"
+    #- You also need to configure the url in your script based on the branchName
+    #- Also developer needs to configure a call to your project in their ci yml file
     #- echo "executing script on branch ${branchName}"
     - "mvn clean -Dtest=ScenarioValuationReport test -DreTry=2 -Dbrowser -Denv -DgridUrl=http://selenium__standalone-chrome:4444/wd/hub"
   artifacts:

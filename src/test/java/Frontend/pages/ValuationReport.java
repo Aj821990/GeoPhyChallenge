@@ -37,7 +37,7 @@ public class ValuationReport extends BasePageMethods {
 
     /******* Page methods *******/
     /**
-     * valuationReportElements() takes condition for NOI as input
+     * valuationReportElements() takes condition for NOI (Net Operating Income) as input
      * and verifies whether all elements are present on the page
      * and gives hard assert fail if elements are not present
      */
@@ -69,7 +69,7 @@ public class ValuationReport extends BasePageMethods {
     }
 
     /**
-     * valuationValuesValidation() takes condition for NOI as input and
+     * valuationValuesValidation() takes condition for NOI (Net Operating Income) as input and
      * verifies whether the results displayed are as per the inputs
      * previously given
      * @param NOI
@@ -99,8 +99,9 @@ public class ValuationReport extends BasePageMethods {
     }
 
     /**
-     * verifyValueInMap() takes the map object and the value which needs to be confirmed.
-     * verifyValueInMap() confirms whether the required value is present in the map or not
+     * verifyValueInMap() takes the map object and the value which needs to be checked.
+     * verifyValueInMap() confirms whether value inserted on valuation page is present
+     * on the valuation report or not
      * @param map1
      * @param value
      * @return

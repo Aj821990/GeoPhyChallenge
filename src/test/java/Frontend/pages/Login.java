@@ -22,7 +22,6 @@ public class Login extends BasePageMethods {
     By loginSubmitButton = By.xpath("//*[@type='submit']");
     By errorForEmptyCredentials = By.xpath("//*[@class='alert alert--error']");
     By errorForEmptyLoginEmailID = By.xpath("//li[contains(text(), 'email')]");
-    By errorForEmptyLoginPassword = By.xpath("//li[contains(text(), 'password')]");
     By errorForInvalidID = By.xpath("//*[@class='alert alert--danger']");
     By errorForInvalidPassword = By.xpath("//*[@class='alert alert--warning']");
 
@@ -77,6 +76,7 @@ public class Login extends BasePageMethods {
     /**
      * loginTimeOut() checks for the timeout or session expiry
      * for a particular session
+     * This method is not used in any test scenario as the wait time is not clear
      * @throws InterruptedException
      */
     public void loginTimeOut() throws InterruptedException {
@@ -87,6 +87,12 @@ public class Login extends BasePageMethods {
          */
         TimeUnit.MINUTES.wait(10);
         driver.navigate().refresh();
+        if(waitUntilUrlContains("login"))
+        {
+            log.info("session expired");
+        }
+        else
+            log.info("session NOT expired");
     }
 
 }

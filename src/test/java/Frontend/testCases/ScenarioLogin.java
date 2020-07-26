@@ -13,14 +13,16 @@ public class ScenarioLogin extends TestBase {
         Login login = new Login();
         log.info("blank username and blank password");
         login.loginValidation("","");
-        log.info("blank username and some password");
-        login.loginValidation("","abcd");
-        log.info("some username and blank password");
-        login.loginValidation("abcd@xyz.com","");
+        log.info("blank username and valid password");
+        login.loginValidation("",Constants.PASSWORD);
+        log.info("valid username and blank password");
+        login.loginValidation(Constants.USER,"");
+        log.info("invalid username and invalid password");
+        login.loginValidation(Constants.INVALID_USER, Constants.INVALID_PASSWORD);
         log.info("invalid username and valid password");
-        login.loginValidation("abcd@xyz.com", Constants.PASSWORD);
+        login.loginValidation(Constants.INVALID_USER, Constants.PASSWORD);
         log.info("valid username and invalid password");
-        login.loginValidation(Constants.USER, "abcd");
+        login.loginValidation(Constants.USER, Constants.INVALID_PASSWORD);
         log.info("valid username and valid password");
         login.loginValidation(Constants.USER,Constants.PASSWORD);
     }

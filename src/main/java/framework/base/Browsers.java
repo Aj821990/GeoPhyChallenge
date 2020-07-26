@@ -33,16 +33,16 @@ public class Browsers {
         WebDriver driver;
 
         if(REMOTE == null || REMOTE.equals("false")) {
-            loadBrowsers();
+            loadBrowsers(); // i have added only chrome driver path for now. other browser path can be added based on requirements
             driver = getLocalDriver();
         } else {
             driver = runRemote(getGridUrl());
         }
 
         if(System.getProperty("os.name").toLowerCase().contains("mac")) {
-            driver.manage().window().setSize(new Dimension(1680, 1050));
+            driver.manage().window().setSize(new Dimension(1680, 1050)); // this was set to make sure the script runs in mac also
         } else if(!BROWSER.equalsIgnoreCase("mobileweb")) {
-            driver.manage().window().maximize();
+            driver.manage().window().maximize(); // have not configured mobileweb.
         }
 
         return driver;
@@ -91,7 +91,7 @@ public class Browsers {
             case "chrome":
                 return new ChromeDriver();
             case "firefox":
-                return new FirefoxDriver();
+                return new FirefoxDriver(); // not configured
         }
     }
 

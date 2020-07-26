@@ -26,6 +26,13 @@ import static framework.Utilities.DriverManager.getDriver;
 
 public class ScreenshotTaker {
 
+    /**
+     * takeScreenShot() takes name as an input and takes a screenshot and adds it to
+     * reportFactory(report). This is created so that a screenshot can be taken
+     * whenever required by the user (like for success scenarios or specific scenarios)
+     * @param name
+     * @throws IOException
+     */
     public static void takeScreenShot(String name) throws IOException {
         ReportFactory.getChildTest().pass(name, MediaEntityBuilder.createScreenCaptureFromBase64String(ScreenshotTaker.addScreenshot()).build());
     }

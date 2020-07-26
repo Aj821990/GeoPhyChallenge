@@ -54,7 +54,7 @@ public class ReportFactory {
 
         path = path + "/" + dtf.format(localDate) + "-TestReport.html";
         ExtentHtmlReporter extentHtmlReporter = new ExtentHtmlReporter(path);
-        extentHtmlReporter.config().setReportName("Automation Project");
+        extentHtmlReporter.config().setReportName("GeoPhy Automation Project");
         extentHtmlReporter.config().setChartVisibilityOnOpen(true);
         extentHtmlReporter.setAppendExisting(true);
         extentHtmlReporter.config().setEncoding("utf-8");

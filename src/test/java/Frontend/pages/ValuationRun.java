@@ -5,6 +5,7 @@ import framework.base.BasePageMethods;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 /**
  * This is the class where all valuation page objects and valuation
@@ -64,8 +65,8 @@ public class ValuationRun extends BasePageMethods {
     }
 
     /**
-     * valuationInputs() takes below inputs and executes based on whether NOI
-     * is considered or not.
+     * valuationInputs() takes below inputs and executes based on whether
+     * NOI (Net Operating Income) has to be included or not.
      * @param NOI
      * @param value
      * @throws InterruptedException
@@ -78,6 +79,10 @@ public class ValuationRun extends BasePageMethods {
         waitUntilVisibleByLocator(addressInput);
         clickWebElement(addressInput);
         address.sendKeys(Keys.DOWN);
+        if(isElementPresent(addressNotCorrectError,1))
+        {
+            Assert.fail("Address not correct. Please check address");
+        }
 
         if(NOI==true)
         {
@@ -95,19 +100,20 @@ public class ValuationRun extends BasePageMethods {
 
     /**
      * recentSearchValidation() looks and verifies the recent searches done by the current user
+     * This method is not used anywhere in the scenarios
      */
     public void recentSearchValidation()
     {
-        /* this can be carried out if we have proper
+        /* This can be carried out if we have proper
            database connection and query to figure
            the number of total searches, dates and other details
          */
-        /* if it is first time user then there may not be
-           any recent searches. in this case we can query the count
+        /* If it is a first time user then there may not be
+           any recent searches. In this case we can query the count
            for a specific user and if the count > 0 then call this
-           function else skip it
+           function else skip it or handle the method for first time users also
          */
-        /* i am not sure the total count of recent search shown on
+        /* I am not sure the total count of recent search shown on
            the screen. And also if it has any conditions like not
            more than 1 week old or so.
          */

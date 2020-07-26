@@ -1,14 +1,14 @@
 # GeoPhyChallenge
 
-Selenium Automation script with Java8, Maven, TestNG, docker-compose, gitlab-ci and circleci
+Selenium Automation script in Chrome with Java8, Maven, TestNG, docker-compose, gitlab-ci and circleci
 
 ## Requirements:
-Below dependencies needs to be installed and set environmental variables
-- Java 8 or higher (JAVA_HOME and PATH)
-- Maven (M2, MAVEN_HOME and PATH)
+Below dependencies needs to be installed/configured
+- Java 8 or higher (JAVA_HOME and PATH in environmental variables)
+- Maven (M2, MAVEN_HOME and PATH in environmental variables)
 - IDE (IntelliJ is preferred)
 - Chrome browser (latest)
-- Chrome driver (is already added but in case if your chrome doesnot support, please download and add a suitable chromedriver)
+- Chrome driver (chrome driver is already added but in case if chrome browser and chrome driver are not compatible, please download and add a suitable chromedriver)
 
 ## Downloading Project:
 - Using git command: git clone https://github.com/Aj821990/GeoPhyChallenge.git
@@ -18,7 +18,7 @@ Below dependencies needs to be installed and set environmental variables
 - Download the project from https://github.com/Aj821990/GeoPhyChallenge
 
 ## Execution:
-- Run via TestNG
+1.. Run via TestNG
 ````sh
 Click on the run button on your IDE or right click on your testNG file and click RUN
 
@@ -27,20 +27,36 @@ Below scenarios are mentioned in TestNG file:
 <class name="Frontend.testCases.ScenarioValuation"> </class>
 <class name="Frontend.testCases.ScenarioValuationReport"> </class>
 ````
-- Run via terminal
-```sh 
-This will execute only one scenario i.e. ScenarioValuationReport
-mvn clean -Dtest=ScenarioValuationReport test -DreTry=1 -Dbrowser -Denv
+2.. Run via terminal
+```sh
+mvn clean -Dtest=<tests> test -DreTry=<max retry> -Dbrowser=<browser> -Denv=<environment>
+example:
+mvn clean -Dtest=ScenarioLogin,ScenarioValuation,ScenarioVa*uationReport test -DreTry=2 -Dbrowser -Denv
 ```
-- Run via gitlab CI pipeline
-```sh 
-This will execute only one scenario i.e. ScenarioValuationReport in headless mode and on selenium hub server
-mvn clean -Dtest=ScenarioValuationReport test -DreTry=2 -Dbrowser -Denv -DgridUrl=http://selenium__standalone-chrome:4444/wd/hub
+3.. Run via gitlab CI pipeline
+```sh
+This will execute in headless mode and on selenium hub server
+mvn clean -Dtest=<tests> test -DreTry=<max retry> -Dbrowser=<browser> -Denv=<environment> -DgridUrl=<gridurl>
+example:
+mvn clean -Dtest=ScenarioLogin,ScenarioValuation,ScenarioVa*uationReport test -DreTry=2 -Dbrowser -Denv -DgridUrl=http://selenium__standalone-chrome:4444/wd/hub
 ```
-- Run via circleci pipeline ()
+4.. Run via circleci pipeline ()
 ```sh 
-This will execute only one scenario i.e. ScenarioValuationReport in headless mode and on selenium hub server
-mvn clean -Dtest=ScenarioValuationReport test -DreTry=2 -Dbrowser -Denv -DgridUrl=http://selenium__standalone-chrome:4444/wd/hub
+This will execute in headless mode and on selenium hub server
+mvn clean -Dtest=<tests> test -DreTry=<max retry> -Dbrowser=<browser> -Denv=<environment> -DgridUrl=<gridurl>
+example:
+mvn clean -Dtest=ScenarioLogin,ScenarioValuation,ScenarioVa*uationReport test -DreTry=2 -Dbrowser -Denv -DgridUrl=http://selenium__standalone-chrome:4444/wd/hub
 ```
-**<ins>NOTE:<ins>** _When executing from pipeline make sure you change remote=true in path src\main\java\resources\config.properties_
+**<ins>NOTE:<ins>** _When executing from pipeline make sure you change **remote=true** in path src\main\java\resources\config.properties_
 
+
+##Important points to remember:
+- ***Logging:*** Logging currently logs with INFO level. Log level can be modified by updating *log4j.rootLogger=INFO, FILE, CONSOLE* from log4j.properties
+- ***docker-compose:*** This project focuses only on Selenium and chrome in docker-compose file 
+- ***Unused Classes:*** Queries and Database Connection classes are currently not used but can be used to validate data from database
+- ***Screenshot:*** Screenshot is taken only for failed scenarios and is saved as Base64 image in the test report
+- ***Test Report:*** Test Report is saved in location - reports
+- ***Screenshots:*** Screenshots are saved in location - screenshots
+- ***Logs:*** Logs are saved in location - log
+- ***.gitignore:*** reports/, .idea/, log/, target/, screenshots/ are covered in .gitignore file
+ 
