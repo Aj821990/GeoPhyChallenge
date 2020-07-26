@@ -6,7 +6,7 @@ jobs:
   build:
     docker:
       - image: circleci/openjdk:8u222-jdk
-      - docker:dind
+      - image: docker:dind
       - image: selenium/standalone-chrome:latest
 
     steps:
