@@ -3,16 +3,7 @@ version: 2.1
 orbs:
   maven: circleci/maven@0.0.12
 
-service:
-  - docker:dind
-  - selenium/standalone-chrome:latest
-
 workflows:
   maven_test:
     jobs:
-      - mvn clean -Dtest=ScenarioValuationReport test -DreTry=2 -Dbrowser -Denv -DgridUrl=http://selenium__standalone-chrome:4444/wd/hub
-    artifacts:
-      when: always
-      paths:
-        - /builds/Aj821990/GeoPhyChallenge/screenshots/
-        - /builds/Aj821990/GeoPhyChallenge/reports/
+      - maven/test # checkout, build, test, and upload test results
