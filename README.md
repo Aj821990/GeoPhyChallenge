@@ -45,7 +45,7 @@ mvn clean -Dtest=ScenarioLogin,ScenarioValuation,ScenarioVa*uationReport test -D
 This will execute in headless mode and on selenium hub server
 mvn clean -Dtest=<tests> test -DreTry=<max retry> -Dbrowser=<browser> -Denv=<environment> -DgridUrl=<gridurl>
 example:
-mvn clean -Dtest=ScenarioLogin,ScenarioValuation,ScenarioVa*uationReport test -DreTry=2 -Dbrowser -Denv -DgridUrl=http://selenium__standalone-chrome:4444/wd/hub
+mvn clean test -Dtest=ScenarioLogin,ScenarioValuation,ScenarioVa*uationReport -DreTry=2 -Dbrowser -Denv -DgridUrl=http://selenium__standalone-chrome:4444/wd/hub
 ```
 **<ins>NOTE:<ins>** _When executing from pipeline make sure you change **remote=true** in path src\main\java\resources\config.properties_
 
