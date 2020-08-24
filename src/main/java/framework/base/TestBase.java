@@ -1,10 +1,10 @@
 package framework.base;
 
-import framework.Listener.Listener;
-import framework.Utilities.Config;
-import framework.Utilities.DriverManager;
-import framework.Utilities.ReTryTestCase;
-import framework.extentFactory.ReportFactory;
+import framework.extentfactory.ReportFactory;
+import framework.listener.Listener;
+import framework.utilities.Config;
+import framework.utilities.DriverManager;
+import framework.utilities.ReTryTestCase;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.testng.IRetryAnalyzer;
@@ -21,7 +21,7 @@ import java.lang.reflect.Method;
 import java.util.Properties;
 
 import static framework.base.Browsers.prepareDriver;
-import static framework.extentFactory.ReportFactory.createReportFile;
+import static framework.extentfactory.ReportFactory.createReportFile;
 
 /**
  * This is test base where testNG annotation sequence are defined and
@@ -31,16 +31,16 @@ import static framework.extentFactory.ReportFactory.createReportFile;
 @Listeners({Listener.class})
 public class TestBase {
 
-    public static String BROWSER = null;
-    public static String GRIDURL = null;
-    public static String BASEURL = null;
-    public static String REMOTE = null;
-    public static String GRIDNAME = null;
-    public static int RETRY;
-    public String testNameFromXML = null;
-    public static Logger log = Logger.getLogger("rootLogger");
+    static String browserName = null;
+    static String gridurl = null;
+    static String baseurl = null;
+    static String remote = null;
+    static String gridname = null;
+    public static int retry;
+    String testNameFromXML = null;
+    public static final Logger log = Logger.getLogger("rootLogger");
 
-    private Properties loadPropertyFile(String filePath) throws IOException {
+    private static Properties loadPropertyFile(String filePath) throws IOException {
         Properties properties = new Properties();
         File file = new File(filePath);
         InputStream inputStream = new FileInputStream(file);
@@ -49,28 +49,28 @@ public class TestBase {
         return properties;
     }
 
-    public void initializeConfig(String reTry,String browser, String gridUrl) throws Throwable {
+    public static void initializeConfig(int reTry,String browser, String gridUrl) throws IOException {
 
         Properties properties = loadPropertyFile(System.getProperty("user.dir") + "/src/main/java/resources/config.properties");
 
-        BROWSER = browser;
-        GRIDURL = gridUrl;
-        RETRY = Integer.parseInt(reTry);
-        BASEURL = Config.getInstance().getBaseUrl();
-        REMOTE = properties.getProperty("remote");
+        browserName = browser;
+        gridurl = gridUrl;
+        retry = reTry;
+        baseurl = Config.getInstance().getBaseUrl();
+        remote = properties.getProperty("remote");
     }
 
     @Parameters(value = {"reTry", "browser", "gridUrl"})
     @BeforeSuite
     public void beforeSuite(ITestContext context,
-                            @Optional String reTry,
+                            @Optional int reTry,
                             @Optional String browser,
-                            @Optional String gridUrl) throws Throwable {
+                            @Optional String gridUrl) throws IOException {
 
         initializeConfig(reTry, browser, gridUrl);
-        System.out.println("before creating report");
+        log.info("before creating report");
         createReportFile();
-        System.out.println("after creating report");
+        log.info("after creating report");
 
         for(ITestNGMethod method : context.getSuite().getAllMethods()) {
             method.setRetryAnalyzer(new ReTryTestCase());
@@ -85,17 +85,17 @@ public class TestBase {
     }
 
     @BeforeMethod
-    public void beforeMethod(Method method) throws RuntimeException {
+    public void beforeMethod(Method method) {
         DriverManager.setDriver(prepareDriver());
-        getDriver().navigate().to(BASEURL);
+        getDriver().navigate().to(baseurl);
         ReportFactory.createChildTest(testNameFromXML, method.getName());
     }
 
     @AfterMethod
     public void afterMethod(ITestResult result) {
         getDriver().quit();
-        IRetryAnalyzer retry = result.getMethod().getRetryAnalyzer();
-        if (retry == null) {
+        IRetryAnalyzer retryAnalyzer = result.getMethod().getRetryAnalyzer();
+        if (retryAnalyzer == null) {
             return;
         }
         result.getTestContext().getSkippedTests().removeResult(result.getMethod());

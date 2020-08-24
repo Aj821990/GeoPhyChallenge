@@ -1,6 +1,6 @@
 package Frontend.pages;
 
-import framework.Utilities.Constants;
+import framework.utilities.Constants;
 import framework.base.BasePageMethods;
 import org.openqa.selenium.By;
 import java.util.concurrent.TimeUnit;

@@ -1,7 +1,5 @@
-package framework.Utilities;
+package framework.utilities;
 
-import com.aventstack.extentreports.MediaEntityBuilder;
-import framework.extentFactory.ReportFactory;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -17,7 +15,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
-import static framework.Utilities.DriverManager.getDriver;
+import static framework.utilities.DriverManager.getDriver;
+import static framework.base.TestBase.log;
 
 /**
  * This class defines the method to take and add screenshots
@@ -26,17 +25,21 @@ import static framework.Utilities.DriverManager.getDriver;
 
 public class ScreenshotTaker {
 
+    private ScreenshotTaker() {
+    }
+
     /**
      * takeScreenShot() takes name as an input and takes a screenshot and adds it to
      * reportFactory(report). This is created so that a screenshot can be taken
      * whenever required by the user (like for success scenarios or specific scenarios)
-     * @param name
      * @throws IOException
      */
+
+    /*
     public static void takeScreenShot(String name) throws IOException {
         ReportFactory.getChildTest().pass(name, MediaEntityBuilder.createScreenCaptureFromBase64String(ScreenshotTaker.addScreenshot()).build());
     }
-
+*/
     public static String addScreenshot() throws IOException {
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         Date date = new Date();
@@ -62,20 +65,27 @@ public class ScreenshotTaker {
 
         if (!f.isDirectory()) {
             f.mkdir();
-            System.out.println("Folder was created successfully: " + directory);
+            log.info("Folder was created successfully: " + directory);
         }
 
         String destination = directory + fileName;
         File sourceFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
 
-        FileInputStream fileInputStreamReader = new FileInputStream(sourceFile);
-        byte[] bytes = new byte[(int) sourceFile.length()];
-        fileInputStreamReader.read(bytes);
-        String encodedBase64 = new String(Base64.encodeBase64(bytes));
+        String encodedBase64 = null;
 
-        File finalDestination = new File(destination);
-        FileUtils.copyFile(sourceFile, finalDestination);
-        System.out.println("screenshot taken");
+        try(FileInputStream fileInputStreamReader = new FileInputStream(sourceFile))
+        {
+            byte[] bytes = new byte[(int) sourceFile.length()];
+            while(fileInputStreamReader.read(bytes) > 0) {
+                encodedBase64 = new String(Base64.encodeBase64(bytes));
+            }
+
+            File finalDestination = new File(destination);
+            FileUtils.copyFile(sourceFile, finalDestination);
+            log.info("screenshot taken");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return encodedBase64;
     }

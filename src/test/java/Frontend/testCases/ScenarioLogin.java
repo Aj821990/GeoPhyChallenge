@@ -1,7 +1,7 @@
 package Frontend.testCases;
 
 import Frontend.pages.Login;
-import framework.Utilities.Constants;
+import framework.utilities.Constants;
 import framework.base.TestBase;
 import org.testng.annotations.Test;
 

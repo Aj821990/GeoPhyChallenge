@@ -1,6 +1,6 @@
 package Frontend.pages;
 
-import framework.Utilities.Constants;
+import framework.utilities.Constants;
 import framework.base.BasePageMethods;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -91,11 +91,11 @@ public class ValuationReport extends BasePageMethods {
             j=j+2;
         }
 
-        verifyValueInMap(tableValues,Constants.NumberOfUnits);
+        verifyValueInMap(tableValues,Constants.NUMBEROFUNITS);
         verifyValueInMap(tableValues,Constants.OCCUPANCY);
-        verifyValueInMap(tableValues,Constants.YearOfConstruction);
+        verifyValueInMap(tableValues,Constants.YEAROFCONSTRUCTION);
         if (NOI==true)
-        verifyValueInMap(tableValues,Constants.NetOperatingIncome);
+        verifyValueInMap(tableValues,Constants.NETOPERATINGINCOME);
     }
 
     /**

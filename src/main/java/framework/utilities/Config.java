@@ -1,9 +1,11 @@
-package framework.Utilities;
+package framework.utilities;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+
+import static framework.base.TestBase.log;
 
 /**
  * This is the config class which configures the base instances for the process
@@ -11,14 +13,13 @@ import java.util.Properties;
 
 public class Config {
 
-    private static String host,baseUrl;
+    private String baseUrl;
     private static Config instance;
-    final private static Object lockInstance = new Object();
-    private static Properties configuration;
+    private static final Object lockInstance = new Object();
+    private static Properties configuration = new Properties();
 
     private Config() throws IOException {
         loadConfigFileFromResource();
-        host = getConfigValue("HOST");
         baseUrl = getConfigValue("baseUrl");
     }
 
@@ -33,8 +34,6 @@ public class Config {
 
     private void loadConfigFileFromResource() throws IOException {
         final InputStream in = this.getClass().getResourceAsStream("/resources/config.properties");
-
-        configuration = new Properties();
 
         if (in == null) {
             throw new FileNotFoundException("Resource file \"config.properties\" not found");
@@ -55,7 +54,7 @@ public class Config {
     }
 
     public String getBaseUrl(){
-        System.out.println("Returning base url * " + baseUrl + " * from config.java class");
+        log.info("Returning base url * " + baseUrl + " * from config.java class");
         return baseUrl;
     }
 }

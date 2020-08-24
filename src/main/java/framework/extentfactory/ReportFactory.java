@@ -1,4 +1,4 @@
-package framework.extentFactory;
+package framework.extentfactory;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -18,11 +18,13 @@ import java.util.Map;
 
 public class ReportFactory {
 
+    private ReportFactory() {
+    }
+
     private static ExtentReports extentReports = null;
     private static Map<Integer, ExtentTest> extentParentMap = new HashMap<>();
     private static Map<Integer, ExtentTest> extentChildMap = new HashMap<>();
     private static Map<ExtentTest, Boolean> childWithSuccess = new HashMap<>();
-    private static String reportPath = null;
 
     public static ExtentReports createReportFile() {
         ExtentHtmlReporter extentHtmlReporter = setPropertiesOfReport();
@@ -114,7 +116,8 @@ public class ReportFactory {
 
     private static void removeFailedTests() {
         for (Map.Entry<ExtentTest, Boolean> eachParent : childWithSuccess.entrySet()) {
-            if (!eachParent.getValue()) {
+            Boolean value = eachParent.getValue();
+            if (Boolean.TRUE.equals(value)) {
                 extentReports.removeTest(eachParent.getKey());
             }
         }

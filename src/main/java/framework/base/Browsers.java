@@ -29,10 +29,13 @@ import static org.openqa.selenium.remote.CapabilityType.*;
 
 public class Browsers {
 
+    private Browsers() {
+    }
+
     public static WebDriver prepareDriver() {
         WebDriver driver;
 
-        if(REMOTE == null || REMOTE.equals("false")) {
+        if(remote == null || remote.equals("false")) {
             loadBrowsers(); // i have added only chrome driver path for now. other browser path can be added based on requirements
             driver = getLocalDriver();
         } else {
@@ -41,7 +44,7 @@ public class Browsers {
 
         if(System.getProperty("os.name").toLowerCase().contains("mac")) {
             driver.manage().window().setSize(new Dimension(1680, 1050)); // this was set to make sure the script runs in mac also
-        } else if(!BROWSER.equalsIgnoreCase("mobileweb")) {
+        } else if(!browserName.equalsIgnoreCase("mobileweb")) {
             driver.manage().window().maximize(); // have not configured mobileweb.
         }
 
@@ -51,9 +54,9 @@ public class Browsers {
     public static WebDriver runRemote(String gridUrl) {
         WebDriver webDriver;
         DesiredCapabilities cap = getRemoteCapabilities();
-        cap.setCapability(APPLICATION_NAME, GRIDNAME);
+        cap.setCapability(APPLICATION_NAME, gridname);
         try {
-            System.out.println(gridUrl);
+            log.info(gridUrl);
             webDriver = new RemoteWebDriver(new URL(gridUrl), cap);
             ((RemoteWebDriver) webDriver).setFileDetector(new LocalFileDetector());
         } catch (MalformedURLException mue) {
@@ -86,7 +89,7 @@ public class Browsers {
     }
 
     private static WebDriver getLocalDriver() {
-        switch (BROWSER.toLowerCase()) {
+        switch (browserName.toLowerCase()) {
             default:
             case "chrome":
                 return new ChromeDriver();
@@ -97,17 +100,20 @@ public class Browsers {
 
     private static String getGridUrl() {
         log.info("getting the gridurl");
-        if(GRIDNAME != null &&
-                (GRIDNAME.equals("node0") || GRIDNAME.equals("node1") || GRIDNAME.equals("node2"))) {
+        if(gridname != null &&
+                (gridname.equals("node0") || gridname.equals("node1") || gridname.equals("node2"))) {
             return "http://10.214.111.107:80/wd/hub";
         }
-        return GRIDURL;
+        return gridurl;
     }
 
     private static void loadBrowsers() {
         String os = System.getProperty("os.name").toLowerCase();
         if(os.contains("win")) {
             System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "/src/main/java/resources/chromedriver.exe");
+        }
+        else if(os.contains("mac")) {
+            System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "/src/main/java/resources/chromedriver");
         }
     }
 }

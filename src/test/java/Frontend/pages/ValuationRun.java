@@ -1,6 +1,6 @@
 package Frontend.pages;
 
-import framework.Utilities.Constants;
+import framework.utilities.Constants;
 import framework.base.BasePageMethods;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -92,8 +92,8 @@ public class ValuationRun extends BasePageMethods {
         {
             passArgument(unitSizeInput, value);
         }
-        passArgument(numberOfUnitsInput, Constants.NumberOfUnits);
-        passArgument(yearOfConstructionInput, Constants.YearOfConstruction);
+        passArgument(numberOfUnitsInput, Constants.NUMBEROFUNITS);
+        passArgument(yearOfConstructionInput, Constants.YEAROFCONSTRUCTION);
         passArgument(occupancyInput,Constants.OCCUPANCY);
         clickWebElement(runValuationButton);
     }

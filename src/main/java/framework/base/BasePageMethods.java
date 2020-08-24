@@ -21,10 +21,9 @@ import static org.testng.FileAssert.fail;
 public class BasePageMethods {
 
     protected WebDriver driver = getDriver();
-    private WebDriverWait webDriverWait = new WebDriverWait(driver, 60);
     private JavascriptExecutor jsExec = (JavascriptExecutor) driver;
     //XLUtils xlread = new XLUtils(); // can be used when we get data from testdata file
-    public Logger log = Logger.getLogger("rootLogger");
+    public static final Logger log = Logger.getLogger("rootLogger");
 
     // Element click method by By locator
     public void clickWebElement(By locator) {
@@ -43,7 +42,7 @@ public class BasePageMethods {
                     .ignoring(StaleElementReferenceException.class)
                     .ignoring(NoSuchElementException.class);
             element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-        } catch (Throwable t) {
+        } catch (ElementNotVisibleException t) {
             Assert.fail("waitUntilVisibleByLocator fail", t);
         }
         return element;
@@ -60,7 +59,7 @@ public class BasePageMethods {
                     .ignoring(StaleElementReferenceException.class)
                     .ignoring(NoSuchElementException.class);
             element = wait.until(presenceOfElementLocated(locator));
-        } catch (Throwable t) {
+        } catch (ElementNotVisibleException t) {
             Assert.fail("waitUntilPresenceOfElementByLocator" +locator +"fail", t);
         }
         return element;
@@ -165,7 +164,6 @@ public class BasePageMethods {
 
     // compares the value from element to the expected value
     public void textValidation(By locator, String value) {
-        WebElement element = driver.findElement(locator);
         try {
             Wait<WebDriver> wait = new FluentWait<>(driver)
                     .withTimeout(Duration.ofSeconds(30))
